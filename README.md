@@ -21,9 +21,9 @@ English | [简体中文](README.zh-CN.md)
 
 > It can help you:
 >
-> - Summarize individual git work logs
+> - Summarize personal git work logs
 >
-> - Output beautiful Markdown
+> - Output pretty Markdown
 >
 > - Extract a list and count of specified work types
 >
