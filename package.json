@@ -1,0 +1,42 @@
+{
+  "name": "yeareport",
+  "version": "1.0.0",
+  "description": "A library of NodeJS tool to summarize git commit log for year-end report.",
+  "type": "module",
+  "bin": {
+    "yeareport": "./bin/cli.js"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "keywords": [
+    "year-end report",
+    "llm material",
+    "gpt material",
+    "summarize git commit",
+    "summarize git log",
+    "git commit log",
+    "git commit",
+    "git log",
+    "node cli",
+    "nodejs"
+  ],
+  "author": "Zhang Zixin (kabeep)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/lodash.groupby": "^4.6.9",
+    "@types/lodash.startcase": "^4.4.9",
+    "@types/node": "^20.11.0",
+    "@types/yargs": "^17.0.32"
+  },
+  "dependencies": {
+    "@inquirer/confirm": "^2.0.15",
+    "chalk": "^5.3.0",
+    "lodash.groupby": "^4.6.0",
+    "lodash.startcase": "^4.4.0",
+    "ora": "^8.0.1",
+    "yargs": "^17.7.2"
+  }
+}
