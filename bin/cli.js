@@ -4,6 +4,7 @@ const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 const Spinner = require('cli-spinner').Spinner;
 
+const locale = require('./locale/locale.js');
 const logSymbols = require('./util/log-symbols.js');
 const yeareport = require('../lib/index.js');
 
@@ -17,51 +18,35 @@ spinner.start();
 program
     .scriptName('yeareport')
     .usage('$0 <command> [options]')
-    .command('add', '将当前目录添加至待印队列，可选参数：[--username, --date, --overwrite]', {}, run('add'))
-    .command(['remove', 'rm'], '将当前工作目录从待印队列移除', {}, run('remove'))
-    .command(['clear', 'clr'], '清空待印队列', {}, run('clear'))
-    .command(
-        ['print', 'ptr'],
-        '将待印队列中的文件打印成 markdown 文件，输出到 `User/下载/yeareport_xxx.md`，可选参数：[--pretty, --type-first, --type-only]',
-        {},
-        run('print'),
-    )
-    .command('show', '读取待印队列中的项目列表', {}, run('show'))
-    .options('username', {
-        alias: 'n',
-        type: 'array',
-        desc: '[git commit] 使用的用户名， 默认为 `git config --global username`',
-        array: true,
-    })
-    .options('date', {
-        alias: 'd',
-        type: 'string',
-        desc: '[git log] 的 `--since` 参数，默认为上一年的 `01-01`',
-    })
-    .options('output', {
-        type: 'string',
-        desc: 'print 命令的输出目录，相对于当前工作目录，默认`User/Downloads`',
-    })
-    .options('overwrite', {
+    .command('add', locale.CMD_DES_COMMAND_ADD, {}, run('add'))
+    .command(['remove', 'rm'], locale.CMD_DES_COMMAND_REMOVE, {}, run('remove'))
+    .command(['clear', 'clr'], locale.CMD_DES_COMMAND_CLEAR, {}, run('clear'))
+    .command(['print', 'ptr'], locale.CMD_DES_COMMAND_PRINT, {}, run('print'))
+    .command('show', locale.CMD_DES_COMMAND_SHOW, {}, run('show'))
+    .option('author', { type: 'string', desc: locale.CMD_DES_OPTION_AUTHOR })
+    .option('since', { type: 'string', desc: locale.CMD_DES_OPTION_SINCE })
+    .option('before', { type: 'string', desc: locale.CMD_DES_OPTION_BEFORE })
+    .option('output', { type: 'string', desc: locale.CMD_DES_OPTION_OUTPUT })
+    .option('overwrite', {
         alias: 'o',
         type: 'boolean',
-        desc: '待 add 的项目日志已存在时进行覆写操作',
+        desc: locale.CMD_DES_OPTION_OVERWRITE,
         boolean: true,
         default: false,
     })
-    .options('pretty', {
+    .option('pretty', {
         alias: 'p',
         type: 'boolean',
-        desc: '使用 emoji 美化 print 的提交类型标题',
+        desc: locale.CMD_DES_OPTION_PRETTY,
         boolean: true,
         default: false,
     })
     .demandCommand()
     .strictCommands()
-    .example('$0 add -n yourname', '输出 `yourname` 的 commit 提交日志，默认 git config global 的 user.name')
-    .example('$0 add -d 2024-01-01', '输出 `2024-01-01` 到今天的全部日志，默认 last_year-01-01')
-    .example('$0 add -o', '如果待印队列中已存在当前工作目录的项目，程序将根据 `--overwrite` 参数决定抛出异常/覆写')
-    .example('$0 print -p', '当存在此项，二级标题将输出：## {emoji} {commit-type}')
+    .example('$0 add -o', locale.CMD_DES_EXAMPLE_OVERWRITE)
+    .example('$0 add --author=kabeep', locale.CMD_DES_EXAMPLE_AUTHOR)
+    .example('$0 add --since=2023-01-01 --before=2024-01-01', locale.CMD_DES_EXAMPLE_SINCE_BEFORE)
+    .example('$0 print -p', locale.CMD_DES_EXAMPLE_PRETTY)
     .help().alias('h', 'help')
     .version().alias('v', 'version')
     .parse();
@@ -113,7 +98,7 @@ function done (type, status = true) {
     cursor(true);
 
     const label = getActionLabel(type);
-    console.log(`${logSymbols[status ? 'success' : 'error']} ${label} ${status ? '成功' : '失败'}`);
+    console.log(`${logSymbols[status ? 'success' : 'error']} ${label} ${status ? locale.CMD_STATUS_SUCCESS : locale.CMD_STATUS_ERROR}`);
 }
 
 function cursor (visible = false) {
@@ -125,14 +110,14 @@ function cursor (visible = false) {
 function getActionLabel (type) {
     switch (type) {
         case 'add':
-            return '添加';
+            return locale.CMD_TITLE_COMMAND_ADD;
         case 'remove':
-            return '移除';
+            return locale.CMD_TITLE_COMMAND_REMOVE;
         case 'clear':
-            return '清空';
+            return locale.CMD_TITLE_COMMAND_CLEAR;
         case 'print':
-            return '分析';
+            return locale.CMD_TITLE_COMMAND_PRINT;
         case 'show':
-            return '读取';
+            return locale.CMD_TITLE_COMMAND_SHOW;
     }
 }
