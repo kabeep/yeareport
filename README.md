@@ -126,6 +126,16 @@ yeareport <command> [options]
                                             {emoji} {commit-type}`
 ```
 
+## 🎯 RoadMap
+
+- Statistical analysis and word segmentation
+
+- Percentage calculation
+
+- Trend chart
+
+- Gantt chart
+
 ## 🤝 Contribution
 Contributions via Pull Requests or [Issues](https://github.com/kabeep/git-short-dir-prompt/issues) are welcome.
 
