@@ -2,15 +2,17 @@
 const process = require('node:process');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
-// const ora = require('ora');
+const Spinner = require('cli-spinner').Spinner;
 
+const logSymbols = require('./util/log-symbols.js');
 const yeareport = require('../lib/index.js');
 
 const program = yargs(hideBin(process.argv));
 
-// const spinner = ora({ text: '', color: 'cyan' });
-
-const getCommander = op => [op.name, op.alias].filter(Boolean);
+const spinner = new Spinner('%s ');
+spinner.setSpinnerString('⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏');
+spinner.setSpinnerDelay(80);
+spinner.start();
 
 program
     .scriptName('yeareport')
@@ -66,20 +68,24 @@ program
 
 function run (type) {
     return async (argv) => {
-        // spinner.start(`${operator[type.toUpperCase()].summary}中...`);
+        start();
         await yeareport({ type, ...argv }).then(resolver(type)).catch(catcher(type));
     };
 }
 
 function resolver (type) {
-    return (args) => {
+    return async (args) => {
         switch (type) {
             case 'show':
-                // spinner.succeed(`${operator[type.toUpperCase()].summary}完成`);
-                log(args);
+                done(type, args);
+                console.log();
+
+                for (let index = 0; index < (args?.length || 0); index++) {
+                    console.log(`> ${args[index]}`);
+                }
                 break;
             default:
-                // spinner.succeed(`${operator[type.toUpperCase()].summary}完成`);
+                done(type);
                 break;
         }
     };
@@ -87,18 +93,46 @@ function resolver (type) {
 
 function catcher (type) {
     return err => {
-        // spinner.fail(`${operator[type.toUpperCase()].summary}失败`);
-        log([undefined, `${err}`]);
+        done(type, false);
+        console.log();
+        console.log(`${err}`);
         process.exit(1);
     };
 }
 
-function log (ls) {
-    if (!ls) return;
-    if (!Array.isArray(ls))
-        ls = [ls];
+function start () {
+    spinner.setSpinnerTitle('test');
 
-    for (const val of ls) {
-        console.log(val || '');
+    cursor(true);
+}
+
+function done (type, status = true) {
+    spinner.clearLine(process.stderr);
+    spinner.stop();
+
+    cursor(true);
+
+    const label = getActionLabel(type);
+    console.log(`${logSymbols[status ? 'success' : 'error']} ${label} ${status ? '成功' : '失败'}`);
+}
+
+function cursor (visible = false) {
+    if (!process.stderr.isTTY) return;
+
+    process.stderr.write(visible ? '\u001B[?25h' : '\u001B[?25l');
+}
+
+function getActionLabel (type) {
+    switch (type) {
+        case 'add':
+            return '添加';
+        case 'remove':
+            return '移除';
+        case 'clear':
+            return '清空';
+        case 'print':
+            return '分析';
+        case 'show':
+            return '读取';
     }
 }
