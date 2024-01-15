@@ -1,6 +1,6 @@
 <h1 align="center"> yeareport </h1>
 <p align="center">
-  <b >为年终报告总结 git commit 的 NodeJS 小工具，自动化生成 Markdown</b>
+  <b>为年终报告总结 git commit 的 NodeJS 小工具，自动化生成 Markdown</b>
 </p>
 
 ---
@@ -11,7 +11,7 @@
 ![Version](https://img.shields.io/badge/Version-1.0.0-cornflowerblue)
 [![License](https://img.shields.io/badge/License-MIT-slateblue)](LICENSE)
 
-[English](README.md) | 简体中文
+[English](README.md) | 简体中文 | [日本語](README.ja-JP.md) | [हिंदी](README.hi-IN.md)
 
 </div>
 
@@ -39,9 +39,9 @@
 > 
 > - 为 GPT 的投喂数据进行预解析
 
-[Markdown](example/yeareport_1705018390501.md) 输出结果演示
+[Markdown](example/example.md) 输出结果演示
 
-![default_example](example/yeareport_1705018390501.png)
+![default_example](example/screenshot.png)
 
 ## ⚙️ 安装
 
@@ -83,32 +83,40 @@ yeareport -v
 
 ## 🚀 使用
 
+![Usage](example/usage.png)
+
 ```text
 yeareport <command> [options]
 
 命令：
-  yeareport add     将当前目录添加至待印队列，可选参数：[--overwrite]
-  yeareport remove  将当前工作目录从待印队列移除                   [aliases: rm]
-  yeareport clear   清空待印队列                                  [aliases: clr]
-  yeareport print   将待印队列中的文件打印成 markdown 文件，输出到 `User/下载/yeareport_xxx.md`，可选参数：[--pretty]                    [aliases: ptr]
-  yeareport show    读取待印队列中的项目列表
+  yeareport add     将当前目录添加至队列
+  yeareport remove  将当前工作目录从队列中移除                     [aliases: rm]
+  yeareport clear   清空队列                                      [aliases: clr]
+  yeareport print   将队列输出为 markdown 文件                    [aliases: ptr]
+  yeareport show    显示队列中的日志列表
 
 选项：
-  -n, --username    [git commit] 使用的用户名， 默认为 `git config --global username`  [数组]
-  -d, --date        [git log] 的 `--since` 参数，默认为上一年的 `01-01`                [字符串]
-  -o, --overwrite   待 add 的项目日志已存在时进行覆写操作                                [布尔] [默认值: false]
-      --output      print 命令的输出目录，相对于当前工作目录，默认`User/Downloads`         [字符串]
-  -p, --pretty      使用 emoji 美化 print 的提交类型标题                               [布尔] [默认值: false]
-      --type-first  使用提交类型分组的 print 方式而非项目分组，优先级大于 --type-only       [布尔] [默认值: false]
-      --type-only   传入此参数则只 print 该类型的工作内容，优先级小于 --type-first         [字符串]
-  -h, --help        显示帮助信息                                                     [布尔]
-  -v, --version     显示版本号                                                       [布尔]
+      --author     为 `auto` 时从 git global config 中查找，默认全部输出日志
+                                                                        [字符串]
+      --since      从某日开始输出，默认为 `2023-01-01`                  [字符串]
+      --before     输出到某日结束，默认为 `2024-01-01`                  [字符串]
+      --output     print 输出目录，相对于当前工作目录，默认 `User/Downloads`
+                                                                        [字符串]
+  -o, --overwrite  add 覆写授权，当前工作目录已存在时进行覆写操作
+                                                          [布尔] [默认值: false]
+  -p, --pretty     print 美化标题，使用 emoji 美化 Markdown 标题
+                                                          [布尔] [默认值: false]
+  -h, --help       显示帮助信息                                           [布尔]
+  -v, --version    显示版本号                                             [布尔]
 
 示例：
-  yeareport add -n yourname                 输出 `yourname` 的 commit 提交日志，默认 git config global 的 user.name
-  yeareport add -d 2024-01-01               输出 `2024-01-01` 到今天的全部日志，默认 last_year-01-01
-  yeareport add -o                          如果待印队列中已存在当前工作目录的项目，程序将根据 `--overwrite` 参数决定抛出异常/覆写
-  yeareport print -p                        当存在此项，二级标题将输出：## {commit-type-emoji} {commit-type}
+  yeareport add -o                          授权 add 命令当前工作目录的日志已在
+                                            队列中时进行覆写
+  yeareport add --author=kabeep             仅将作者 kabeep 的日志添加到队列
+  yeareport add --since=2023-01-01          将 2023-01-01 到 2024-01-01
+  --before=2024-01-01                       的日志添加到队列
+  yeareport print -p                        Markdown 标题将输出 `# {emoji}
+                                            {commit-type}`
 ```
 
 ## 🤝 贡献
