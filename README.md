@@ -11,7 +11,7 @@
 ![Version](https://img.shields.io/badge/Version-1.0.0-cornflowerblue)
 [![License](https://img.shields.io/badge/License-MIT-slateblue)](LICENSE)
 
-English | [简体中文](README.zh-CN.md)
+English | [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md) | [हिंदी](README.hi-IN.md)
 
 </div>
 
@@ -39,9 +39,9 @@ English | [简体中文](README.zh-CN.md)
 >
 > - Pre-parse data fed to GPT
 
-[Markdown](example/yeareport_1705018390501.md) output result demonstration
+[Markdown](example/example.md) output result demonstration
 
-![default_example](example/yeareport_1705018390501.png)
+![default_example](example/screenshot.png)
 
 ## ⚙️ Installation
 
@@ -83,33 +83,47 @@ yeareport -h
 
 ## 🚀 Usage
 
+![Usage](example/usage.png)
+
 ```text
 yeareport <command> [options]
 
-Commands:
-  yeareport add     Add the current directory to the print queue, optional parameter: [--overwrite]
-  yeareport remove  Remove the current working directory from the print queue     [aliases: rm]
-  yeareport clear   Clear the print queue                                      [aliases: clr]
-  yeareport print   Print files in the print queue into markdown files, output to
-                    `User/Downloads/yeareport_xxx.md`, optional parameters: [--pretty]                                [aliases: ptr]
-  yeareport show    Read the list of projects in the print queue
+命令：
+  yeareport add     Add the current directory to the queue
+  yeareport remove  Remove the current working directory from the queue
+                                                                   [aliases: rm]
+  yeareport clear   Clear the queue                               [aliases: clr]
+  yeareport print   Output the queue as a markdown file           [aliases: ptr]
+  yeareport show    Show the list of logs in the queue
 
-Options:
-  -n, --username    [git commit] Username used, default to `git config --global username` [array]
-  -d, --date        [git log] `--since` parameter, default to `01-01` of last year [string]
-  -o, --overwrite   Overwrite operation when project log to be added already exists [boolean] [default: false]
-      --output      Output directory for the print command, relative to the current working directory, default `User/Downloads` [string]
-  -p, --pretty      Use emojis to beautify the commit type titles in the print  [boolean] [default: false]
-      --type-first  Use commit type grouping for the print instead of project grouping, higher priority than --type-only [boolean] [default: false]
-      --type-only   Input this parameter to only print the work content of that type, lower priority than --type-first [string]
-  -h, --help        Show help information                                       [boolean]
-  -v, --version     Show version number                                         [boolean]
+选项：
+      --author     When `auto`, look up from git global config, default to
+                   output all logs                                      [string]
+      --since      Start outputting from a certain date, default to `2023-01-01`
+                                                                        [string]
+      --before     End outputting on a certain date, default to `2024-01-01`
+                                                                        [string]
+      --output     print output directory, relative to the current working
+                   directory, default `User/Downloads`                  [string]
+  -o, --overwrite  add overwrite authorization, perform overwrite operation when
+                   the current working directory already exists
+                                                          [bool] [default: false]
+  -p, --pretty     print beautify the title, use emoji to beautify Markdown
+                   titles                                 [bool] [default: false]
+  -h, --help       显示帮助信息                                           [bool]
+  -v, --version    显示版本号                                             [bool]
 
-Examples:
-  yeareport add -n yourname                 Output the commit log of `yourname`, default to the user.name of git config global
-  yeareport add -d 2024-01-01               Output all logs from `2024-01-01` to today, default to last_year-01-01
-  yeareport add -o                          If the project in the current working directory already exists in the print queue, the program will decide to throw an exception/overwrite based on the `--overwrite` parameter
-  yeareport print -p                        When this item exists, the second-level title will output: ## {commit-type-emoji} {commit-type}
+示例：
+  yeareport add -o                          Authorize the add command to
+                                            overwrite when logs of the current
+                                            working directory are already in the
+                                            queue
+  yeareport add --author=kabeep             Only add logs of author kabeep to
+                                            the queue
+  yeareport add --since=2023-01-01          Add logs from 2023-01-01 to
+  --before=2024-01-01                       2024-01-01 to the queue
+  yeareport print -p                        Markdown titles will output `#
+                                            {emoji} {commit-type}`
 ```
 
 ## 🤝 Contribution
