@@ -5,6 +5,7 @@ module.exports = {
     CMD_TITLE_COMMAND_PRINT: 'Analyze',
     CMD_TITLE_COMMAND_SHOW: 'Read',
 
+    CMD_STATUS_PENDING: 'Wait',
     CMD_STATUS_SUCCESS: 'Completed',
     CMD_STATUS_ERROR: 'Failed',
 

@@ -5,6 +5,7 @@ module.exports = {
     CMD_TITLE_COMMAND_PRINT: '分析',
     CMD_TITLE_COMMAND_SHOW: '读取',
 
+    CMD_STATUS_PENDING: '等待',
     CMD_STATUS_SUCCESS: '完成',
     CMD_STATUS_ERROR: '失败',
 
