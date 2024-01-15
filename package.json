@@ -1,6 +1,6 @@
 {
   "name": "yeareport",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A library of NodeJS tool to summarize git commit log for year-end report.",
   "keywords": [
     "year-end report",
