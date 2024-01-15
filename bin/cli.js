@@ -13,7 +13,6 @@ const program = yargs(hideBin(process.argv));
 const spinner = new Spinner('%s ');
 spinner.setSpinnerString('⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏');
 spinner.setSpinnerDelay(80);
-spinner.start();
 
 program
     .scriptName('yeareport')
@@ -53,7 +52,7 @@ program
 
 function run (type) {
     return async (argv) => {
-        start();
+        start(type);
         await yeareport({ type, ...argv }).then(resolver(type)).catch(catcher(type));
     };
 }
@@ -85,8 +84,9 @@ function catcher (type) {
     };
 }
 
-function start () {
-    spinner.setSpinnerTitle('test');
+function start (type) {
+    spinner.setSpinnerTitle(`${locale.CMD_STATUS_PENDING} ${getActionLabel(type)}...`);
+    spinner.start();
 
     cursor(true);
 }

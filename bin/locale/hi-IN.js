@@ -5,6 +5,7 @@ module.exports = {
     CMD_TITLE_COMMAND_PRINT: 'विश्लेषण करें',
     CMD_TITLE_COMMAND_SHOW: 'पढ़ें',
 
+    CMD_STATUS_PENDING: 'प्रतीक्षा करें',
     CMD_STATUS_SUCCESS: 'पूर्ण',
     CMD_STATUS_ERROR: 'विफल',
 
