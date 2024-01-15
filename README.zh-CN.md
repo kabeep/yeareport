@@ -51,15 +51,31 @@
 git clone https://github.com/kabeep/yeareport.git
 ```
 
-2. NPM 软链接
+2. 安装依赖
 
 ```shell
 cd yeareport
 
+# NPM
+npm install
+
+# 或者 Yarn
+yarn
+```
+
+3. 编译程序
+
+```shell
+npm run build
+```
+
+4. NPM 软链接
+
+```shell
 npm link
 ```
 
-3. 测试安装成功
+5. 测试安装成功
 
 ```shell
 yeareport -v
@@ -74,7 +90,7 @@ yeareport <command> [options]
   yeareport add     将当前目录添加至待印队列，可选参数：[--overwrite]
   yeareport remove  将当前工作目录从待印队列移除                   [aliases: rm]
   yeareport clear   清空待印队列                                  [aliases: clr]
-  yeareport print   将待印队列中的文件打印成 markdown 文件，输出到 `User/下载/yeareport_xxx.md`，可选参数：[--pretty, --type-first, --type-only]                    [aliases: ptr]
+  yeareport print   将待印队列中的文件打印成 markdown 文件，输出到 `User/下载/yeareport_xxx.md`，可选参数：[--pretty]                    [aliases: ptr]
   yeareport show    读取待印队列中的项目列表
 
 选项：
@@ -93,11 +109,6 @@ yeareport <command> [options]
   yeareport add -d 2024-01-01               输出 `2024-01-01` 到今天的全部日志，默认 last_year-01-01
   yeareport add -o                          如果待印队列中已存在当前工作目录的项目，程序将根据 `--overwrite` 参数决定抛出异常/覆写
   yeareport print -p                        当存在此项，二级标题将输出：## {commit-type-emoji} {commit-type}
-  yeareport print --type-first              最终 markdown 输出以 `项目 > 提交类型 > 列表` 分节
-  yeareport print --type-first              最终 markdown 输出以 `提交类型 > 项目 > 列表` 分节，不兼容 --type-only 参数
-  yeareport print --type-only               最终 markdown 仅输出匹配类型的 commit 且以 `项目 > 列表` 分节，不兼容 `--pretty` 参数
-  yeareport add -n zhangzixin -d 2023-01-28 && yeareport ptr -p --type-first
-                                            输出`zhangzixin`从`2023-01-28`到今天的提交日志为markdown且以`提交类型 > 项目 > 列表`分节到`User/Downloads`目录
 ```
 
 ## 🤝 贡献

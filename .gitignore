@@ -4,6 +4,10 @@ lib
 # Cache
 .cache
 
+# Lock Files
+package-lock.json
+yarn.lock
+
 # VisualStudioCode template
 .vscode/*
 !.vscode/settings.json

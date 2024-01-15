@@ -51,15 +51,31 @@ English | [简体中文](README.zh-CN.md)
 git clone https://github.com/kabeep/yeareport.git
 ```
 
-2. NPM soft link
+2. Installation dependency
 
 ```shell
 cd yeareport
 
+# NPM
+npm install
+
+# or Yarn
+yarn
+```
+
+3. Compile program
+
+```shell
+npm run build
+```
+
+4. NPM soft link
+
+```shell
 npm link
 ```
 
-3. Test
+5. Test
 
 ```shell
 yeareport -h
@@ -75,8 +91,7 @@ Commands:
   yeareport remove  Remove the current working directory from the print queue     [aliases: rm]
   yeareport clear   Clear the print queue                                      [aliases: clr]
   yeareport print   Print files in the print queue into markdown files, output to
-                    `User/Downloads/yeareport_xxx.md`, optional parameters: [--pretty,
-                    --type-first, --type-only]                                [aliases: ptr]
+                    `User/Downloads/yeareport_xxx.md`, optional parameters: [--pretty]                                [aliases: ptr]
   yeareport show    Read the list of projects in the print queue
 
 Options:
@@ -95,11 +110,6 @@ Examples:
   yeareport add -d 2024-01-01               Output all logs from `2024-01-01` to today, default to last_year-01-01
   yeareport add -o                          If the project in the current working directory already exists in the print queue, the program will decide to throw an exception/overwrite based on the `--overwrite` parameter
   yeareport print -p                        When this item exists, the second-level title will output: ## {commit-type-emoji} {commit-type}
-  yeareport print --type-first              The final markdown output will be sectioned as `Project > Commit Type > List`
-  yeareport print --type-first              The final markdown output will be sectioned as `Commit Type > Project > List`, incompatible with the --type-only parameter
-  yeareport print --type-only               The final markdown will only output the matched type of commit and be sectioned as `Project > List`, incompatible with the `--pretty` parameter
-  yeareport add -n zhangzixin -d 2023-01-28 && yeareport ptr -p --type-first
-                                            The commit log of the output zhangzixin from 2023-01-28 to today is markdown and divided into the User/Downloads directory as Commit Type > Project > List
 ```
 
 ## 🤝 Contribution
