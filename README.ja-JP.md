@@ -88,28 +88,28 @@ yeareport -v
 ```text
 yeareport <command> [options]
 
-命令：
+コマンド：
   yeareport add     現在のディレクトリをキューに追加
-  yeareport remove  現在の作業ディレクトリをキューから削除         [aliases: rm]
-  yeareport clear   キューをクリア                                [aliases: clr]
-  yeareport print   キューをマークダウンファイルとして出力        [aliases: ptr]
+  yeareport remove  現在の作業ディレクトリをキューから削除          [aliases: rm]
+  yeareport clear   キューをクリア                             [aliases: clr]
+  yeareport print   キューをマークダウンファイルとして出力         [aliases: ptr]
   yeareport show    キュー内のログリストを表示
 
-选项：
+オプション：
       --author     `auto`の場合、git global
-                   configから検索、デフォルトはすべてのログを出力       [もじれつ]
+                   configから検索、デフォルトはすべてのログを出力        [もじれつ]
       --since      特定の日から出力開始、デフォルトは `2023-01-01`      [もじれつ]
       --before     特定の日まで出力終了、デフォルトは `2024-01-01`      [もじれつ]
       --output     print 出力ディレクトリ、現在の作業ディレクトリに対して相対的
-                   、デフォルトは `User/Downloads`                      [もじれつ]
+                   、デフォルトは `User/Downloads`                   [もじれつ]
   -o, --overwrite  add 上書き許可、現在の作業ディレクトリが既に存在する場合に上
-                   書き操作を実行                         [ブール] [デフォルト値: false]
+                   書き操作を実行                 [ブール] [デフォルト値: false]
   -p, --pretty     print タイトルを美化、emojiを使ってMarkdownのタイトルを美化
-                                                          [ブール] [デフォルト値: false]
-  -h, --help       显示帮助信息                                           [ブール]
-  -v, --version    显示版本号                                             [ブール]
+                                               [ブール] [デフォルト値: false]
+  -h, --help       ヘルプ情報を表示する                                [ブール]
+  -v, --version    バージョン番号を表示する                             [ブール]
 
-示例：
+例：
   yeareport add -o                          現在の作業ディレクトリのログがキュー
                                             内に既にある場合に上書きするためのad
                                             dコマンドの承認
