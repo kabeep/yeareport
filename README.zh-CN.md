@@ -90,24 +90,24 @@ yeareport <command> [options]
 
 命令：
   yeareport add     将当前目录添加至队列
-  yeareport remove  将当前工作目录从队列中移除                     [aliases: rm]
+  yeareport remove  将当前工作目录从队列中移除                        [aliases: rm]
   yeareport clear   清空队列                                      [aliases: clr]
-  yeareport print   将队列输出为 markdown 文件                    [aliases: ptr]
+  yeareport print   将队列输出为 markdown 文件                     [aliases: ptr]
   yeareport show    显示队列中的日志列表
 
 选项：
       --author     为 `auto` 时从 git global config 中查找，默认全部输出日志
-                                                                        [字符串]
-      --since      从某日开始输出，默认为 `2023-01-01`                  [字符串]
-      --before     输出到某日结束，默认为 `2024-01-01`                  [字符串]
+                                                                       [字符串]
+      --since      从某日开始输出，默认为 `2023-01-01`                     [字符串]
+      --before     输出到某日结束，默认为 `2024-01-01`                     [字符串]
       --output     print 输出目录，相对于当前工作目录，默认 `User/Downloads`
-                                                                        [字符串]
+                                                                       [字符串]
   -o, --overwrite  add 覆写授权，当前工作目录已存在时进行覆写操作
                                                           [布尔] [默认值: false]
   -p, --pretty     print 美化标题，使用 emoji 美化 Markdown 标题
                                                           [布尔] [默认值: false]
-  -h, --help       显示帮助信息                                           [布尔]
-  -v, --version    显示版本号                                             [布尔]
+  -h, --help       显示帮助信息                                            [布尔]
+  -v, --version    显示版本号                                              [布尔]
 
 示例：
   yeareport add -o                          授权 add 命令当前工作目录的日志已在

@@ -88,7 +88,7 @@ yeareport -h
 ```text
 yeareport <command> [options]
 
-命令：
+Command:
   yeareport add     Add the current directory to the queue
   yeareport remove  Remove the current working directory from the queue
                                                                    [aliases: rm]
@@ -96,7 +96,7 @@ yeareport <command> [options]
   yeareport print   Output the queue as a markdown file           [aliases: ptr]
   yeareport show    Show the list of logs in the queue
 
-选项：
+Options:
       --author     When `auto`, look up from git global config, default to
                    output all logs                                      [string]
       --since      Start outputting from a certain date, default to `2023-01-01`
@@ -110,10 +110,10 @@ yeareport <command> [options]
                                                           [bool] [default: false]
   -p, --pretty     print beautify the title, use emoji to beautify Markdown
                    titles                                 [bool] [default: false]
-  -h, --help       显示帮助信息                                           [bool]
-  -v, --version    显示版本号                                             [bool]
+  -h, --help       Display help information                                [bool]
+  -v, --version    Show version number                                     [bool]
 
-示例：
+Example:
   yeareport add -o                          Authorize the add command to
                                             overwrite when logs of the current
                                             working directory are already in the
