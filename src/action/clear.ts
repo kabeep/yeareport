@@ -3,7 +3,7 @@ import path from 'node:path';
 import { cacheDir } from '../constant';
 import { getCacheFiles } from '../util';
 
-function clear () {
+function clear() {
     const caches = getCacheFiles();
 
     for (const filename of caches) {

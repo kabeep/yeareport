@@ -4,13 +4,14 @@ import type { Argv } from '../type';
 import { Fail } from './exception';
 import getUsernameOfGitConfig from './get-username-of-git-config';
 
-function getRepoLog (argv: Argv) {
+function getRepoLog(argv: Argv) {
     try {
         const { since = getFirstDayOfLastYear(), before = getFirstDayOfThisYear(), author: originalAuthor } = argv;
 
-        const author = originalAuthor === 'auto'
-            ? getUsernameOfGitConfig()
-            : `${originalAuthor && `--author=${originalAuthor} ` || ''}`;
+        const author =
+            originalAuthor === 'auto'
+                ? getUsernameOfGitConfig()
+                : `${(originalAuthor && `--author=${originalAuthor} `) || ''}`;
 
         const gitCommand = `git log --pretty="format:%ad %s" --date="format:%F" ${author} --since=${since} --before=${before}`;
         return execSync(`${gitCommand}`, {
@@ -18,17 +19,17 @@ function getRepoLog (argv: Argv) {
             cwd: workingDir,
             stdio: 'pipe',
         });
-    } catch (_) {
+    } catch {
         throw new Fail('Can not get history of log from repository');
     }
 }
 
-function getFirstDayOfThisYear () {
+function getFirstDayOfThisYear() {
     const year = new Date().getFullYear();
     return `${year}-01-01`;
 }
 
-function getFirstDayOfLastYear () {
+function getFirstDayOfLastYear() {
     const year = new Date().getFullYear() - 1;
     return `${year}-01-01`;
 }

@@ -1,0 +1,9 @@
+{
+    "semi": true,
+    "space": 4,
+    "envs": [
+        "node",
+        "es6"
+    ],
+    "prettier": true
+}

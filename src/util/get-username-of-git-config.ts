@@ -2,8 +2,10 @@ import { execSync } from 'node:child_process';
 import { workingDir } from '../constant';
 import { Fail } from './exception';
 
-function getUsernameOfGitConfig () {
-    const throwError = () => { throw new Fail('Git username does not exists'); };
+function getUsernameOfGitConfig() {
+    const throwError = () => {
+        throw new Fail('Git username does not exists');
+    };
 
     try {
         const username = execSync('git config --global user.name', {
@@ -12,11 +14,12 @@ function getUsernameOfGitConfig () {
             stdio: 'pipe',
         });
 
-        if (!username)
+        if (!username) {
             throwError();
+        }
 
         return username.trim();
-    } catch (_) {
+    } catch {
         throw new Fail('Can not get username of git from global config');
     }
 }

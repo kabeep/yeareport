@@ -1,6 +1,6 @@
 import getCacheFiles from '../util/get-cache-files';
 
-function show () {
+function show() {
     return getCacheFiles();
 }
 

@@ -18,12 +18,14 @@ module.exports = {
     CMD_DES_OPTION_AUTHOR: '`auto`の場合、git global configから検索、デフォルトはすべてのログを出力',
     CMD_DES_OPTION_SINCE: `特定の日から出力開始、デフォルトは \`${new Date().getFullYear() - 1}-01-01\``,
     CMD_DES_OPTION_BEFORE: `特定の日まで出力終了、デフォルトは \`${new Date().getFullYear()}-01-01\``,
-    CMD_DES_OPTION_OUTPUT: 'print 出力ディレクトリ、現在の作業ディレクトリに対して相対的、デフォルトは `User/Downloads`',
+    CMD_DES_OPTION_OUTPUT:
+        'print 出力ディレクトリ、現在の作業ディレクトリに対して相対的、デフォルトは `User/Downloads`',
     CMD_DES_OPTION_OVERWRITE: 'add 上書き許可、現在の作業ディレクトリが既に存在する場合に上書き操作を実行',
     CMD_DES_OPTION_PRETTY: 'print タイトルを美化、emojiを使ってMarkdownのタイトルを美化',
 
-    CMD_DES_EXAMPLE_OVERWRITE: '現在の作業ディレクトリのログがキュー内に既にある場合に上書きするためのaddコマンドの承認',
+    CMD_DES_EXAMPLE_OVERWRITE:
+        '現在の作業ディレクトリのログがキュー内に既にある場合に上書きするためのaddコマンドの承認',
     CMD_DES_EXAMPLE_AUTHOR: '著者kabeepのログのみをキューに追加',
     CMD_DES_EXAMPLE_SINCE_BEFORE: '2023-01-01から2024-01-01までのログをキューに追加',
     CMD_DES_EXAMPLE_PRETTY: 'Markdownのタイトルは `# {emoji} {commit-type}` として出力されます',
-}
+};

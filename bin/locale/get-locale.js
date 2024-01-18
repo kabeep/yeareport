@@ -1,4 +1,4 @@
-function baseGetLocale () {
+function baseGetLocale() {
     let locale;
 
     if (global.chrome && global.chrome.runtime && typeof global.chrome.runtime.getManifest === 'function') {
@@ -8,11 +8,11 @@ function baseGetLocale () {
         }
     }
 
-    locale = (global.navigator && (
-        (global.navigator.languages && global.navigator.languages[0]) ||
-        global.navigator.language ||
-        global.navigator.userLanguage
-    ));
+    locale =
+        global.navigator &&
+        ((global.navigator.languages && global.navigator.languages[0]) ||
+            global.navigator.language ||
+            global.navigator.userLanguage);
 
     if (!locale && global.navigator && global.navigator.userAgent) {
         locale = global.navigator.userAgent.match(/;.(\w+-\w+)/i);
@@ -28,15 +28,15 @@ function baseGetLocale () {
             locale =
                 global.Intl.DateTimeFormat().resolvedOptions && global.Intl.DateTimeFormat().resolvedOptions().locale;
         }
+
         if (!locale && ['LANG', 'LANGUAGE'].some(Object.hasOwnProperty, process.env)) {
-            return (process.env.LANG || process.env.LANGUAGE || String())
-                .replace(/[.:].*/, '')
-                .replace('_', '-');
+            return (process.env.LANG || process.env.LANGUAGE || String()).replace(/[.:].*/, '').replace('_', '-');
         }
     }
+
     return locale;
 }
 
-module.exports =  function () {
+module.exports = function () {
     return baseGetLocale().split('-').shift();
-}
+};

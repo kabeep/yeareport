@@ -3,10 +3,9 @@ const process = require('node:process');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 const Spinner = require('cli-spinner').Spinner;
-
+const yeareport = require('../lib/index.js');
 const locale = require('./locale/locale.js');
 const logSymbols = require('./util/log-symbols.js');
-const yeareport = require('../lib/index.js');
 
 const program = yargs(hideBin(process.argv));
 
@@ -46,78 +45,97 @@ program
     .example('$0 add --author=kabeep', locale.CMD_DES_EXAMPLE_AUTHOR)
     .example('$0 add --since=2023-01-01 --before=2024-01-01', locale.CMD_DES_EXAMPLE_SINCE_BEFORE)
     .example('$0 print -p', locale.CMD_DES_EXAMPLE_PRETTY)
-    .help().alias('h', 'help')
-    .version().alias('v', 'version')
+    .help()
+    .alias('h', 'help')
+    .version()
+    .alias('v', 'version')
     .parse();
 
-function run (type) {
+function run(type) {
     return async (argv) => {
         start(type);
-        await yeareport({ type, ...argv }).then(resolver(type)).catch(catcher(type));
+        await yeareport({ type, ...argv })
+            .then(resolver(type))
+            .catch(catcher(type));
     };
 }
 
-function resolver (type) {
+function resolver(type) {
     return async (args) => {
         switch (type) {
-            case 'show':
+            case 'show': {
                 done(type, args);
                 console.log();
 
                 for (let index = 0; index < (args?.length || 0); index++) {
                     console.log(`> ${args[index]}`);
                 }
+
                 break;
-            default:
+            }
+
+            default: {
                 done(type);
                 break;
+            }
         }
     };
 }
 
-function catcher (type) {
-    return err => {
+function catcher(type) {
+    return (error) => {
         done(type, false);
         console.log();
-        console.log(`${err}`);
+        console.log(`${error}`);
         process.exit(1);
     };
 }
 
-function start (type) {
+function start(type) {
     spinner.setSpinnerTitle(`${locale.CMD_STATUS_PENDING} ${getActionLabel(type)}...`);
     spinner.start();
 
     cursor(true);
 }
 
-function done (type, status = true) {
+function done(type, status = true) {
     spinner.clearLine(process.stderr);
     spinner.stop();
 
     cursor(true);
 
     const label = getActionLabel(type);
-    console.log(`${logSymbols[status ? 'success' : 'error']} ${label} ${status ? locale.CMD_STATUS_SUCCESS : locale.CMD_STATUS_ERROR}`);
+    console.log(
+        `${logSymbols[status ? 'success' : 'error']} ${label} ${status ? locale.CMD_STATUS_SUCCESS : locale.CMD_STATUS_ERROR}`,
+    );
 }
 
-function cursor (visible = false) {
+function cursor(visible = false) {
     if (!process.stderr.isTTY) return;
 
     process.stderr.write(visible ? '\u001B[?25h' : '\u001B[?25l');
 }
 
-function getActionLabel (type) {
+function getActionLabel(type) {
     switch (type) {
-        case 'add':
+        case 'add': {
             return locale.CMD_TITLE_COMMAND_ADD;
-        case 'remove':
+        }
+
+        case 'remove': {
             return locale.CMD_TITLE_COMMAND_REMOVE;
-        case 'clear':
+        }
+
+        case 'clear': {
             return locale.CMD_TITLE_COMMAND_CLEAR;
-        case 'print':
+        }
+
+        case 'print': {
             return locale.CMD_TITLE_COMMAND_PRINT;
-        case 'show':
+        }
+
+        case 'show': {
             return locale.CMD_TITLE_COMMAND_SHOW;
+        }
     }
 }

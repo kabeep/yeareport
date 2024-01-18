@@ -3,7 +3,7 @@ import path from 'node:path';
 import { workingDir } from '../constant';
 import { Fail } from './exception';
 
-function getRepoName () {
+function getRepoName() {
     try {
         const repoPath = execSync('git rev-parse --show-toplevel', {
             encoding: 'utf-8',
@@ -12,7 +12,7 @@ function getRepoName () {
         }).trim();
 
         return path.basename(repoPath);
-    } catch (_) {
+    } catch {
         throw new Fail('Directory is not a repository for git');
     }
 }
