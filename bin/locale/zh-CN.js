@@ -26,4 +26,4 @@ module.exports = {
     CMD_DES_EXAMPLE_AUTHOR: '仅将作者 kabeep 的日志添加到队列',
     CMD_DES_EXAMPLE_SINCE_BEFORE: '将 2023-01-01 到 2024-01-01 的日志添加到队列',
     CMD_DES_EXAMPLE_PRETTY: 'Markdown 标题将输出 `# {emoji} {commit-type}`',
-}
+};

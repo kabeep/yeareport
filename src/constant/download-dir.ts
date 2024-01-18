@@ -1,4 +1,4 @@
-import process from 'node:process';
 import path from 'node:path';
+import process from 'node:process';
 
-export default path.resolve(process.env.HOME as string, 'Downloads');
+export default path.resolve(process.env.HOME!, 'Downloads');

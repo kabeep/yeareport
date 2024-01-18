@@ -4,7 +4,7 @@ import { cacheDir } from '../constant';
 import type { Argv } from '../type';
 import { Fail, getRepoLog, getRepoName } from '../util';
 
-async function add (argv: Argv) {
+async function add(argv: Argv) {
     const { overwrite = false } = argv;
 
     const repo = getRepoName();
@@ -12,9 +12,9 @@ async function add (argv: Argv) {
     const filePath = path.resolve(cacheDir, repo);
 
     const isExists = fs.existsSync(filePath);
-    if (isExists && !overwrite)
+    if (isExists && !overwrite) {
         throw new Fail('File does exists, please remove first');
-    else {
+    } else {
         overwrite && isExists && fs.unlinkSync(filePath);
         fs.writeFileSync(filePath, log, 'utf-8');
     }
