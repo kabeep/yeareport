@@ -137,7 +137,9 @@ Example:
 - Gantt chart
 
 ## 🤝 Contribution
-Contributions via Pull Requests or [Issues](https://github.com/kabeep/git-short-dir-prompt/issues) are welcome.
+
+Contributions via Pull Requests or [Issues](https://github.com/kabeep/yeareport/issues) are welcome.
 
 ## 📄 License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
