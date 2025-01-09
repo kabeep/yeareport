@@ -29,9 +29,11 @@ English | [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md) | [ह�
 >
 > How it differs from changelog-cli:
 >
-> - Focused on serving individuals
+> - Focused on you
 >
 > - Flexible and controllable time range
+>
+> - Supported lunar calendar interval
 >
 > - More controllable output result modes
 >
@@ -103,6 +105,8 @@ Options:
                                                                         [string]
       --before     End outputting on a certain date, default to `2024-01-01`
                                                                         [string]
+      --lunar      Use the lunar calendar as the interval for the year-end report
+                                                                       [boolean]
       --output     print output directory, relative to the current working
                    directory, default `User/Downloads`                  [string]
   -o, --overwrite  add overwrite authorization, perform overwrite operation when
