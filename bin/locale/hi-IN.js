@@ -17,7 +17,8 @@ module.exports = {
 
     CMD_DES_OPTION_AUTHOR: '`auto` पर, git global config से खोजें, डिफॉल्ट सभी लॉग आउटपुट करें',
     CMD_DES_OPTION_SINCE: `किसी तारीख से आउटपुट शुरू करें, डिफॉल्ट है \`${new Date().getFullYear() - 1}-01-01\``,
-    CMD_DES_OPTION_BEFORE: `किसी तारीख पर आउटपुट खत्म करें, डिफॉल्ट है \`${new Date().getFullYear()}-01-01\``,
+    CMD_DES_OPTION_BEFORE: `किसी तारीख पर आउटपुट खत्म करें, डिफॉल्ट है \`${new Date().getFullYear() - 1}-12-31\``,
+    CMD_DES_OPTION_LUNAR: 'વર્ષ અંતની રિપોર્ટ માટે ચંદ્ર કેલેન્ડરને અંતરાલ તરીકે ઉપયોગ કરો',
     CMD_DES_OPTION_OUTPUT: 'प्रिंट आउटपुट डायरेक्टरी, वर्तमान कार्य डायरेक्टरी के सापेक्ष, डिफॉल्ट User/Downloads`',
     CMD_DES_OPTION_OVERWRITE:
         'add ओवरराइट प्राधिकरण, जब वर्तमान कार्य डायरेक्टरी पहले से मौजूद हो तो ओवरराइट करने की क्रिया करें',

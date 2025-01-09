@@ -17,7 +17,8 @@ module.exports = {
 
     CMD_DES_OPTION_AUTHOR: 'When `auto`, look up from git global config, default to output all logs',
     CMD_DES_OPTION_SINCE: `Start outputting from a certain date, default to \`${new Date().getFullYear() - 1}-01-01\``,
-    CMD_DES_OPTION_BEFORE: `End outputting on a certain date, default to \`${new Date().getFullYear()}-01-01\``,
+    CMD_DES_OPTION_BEFORE: `End outputting on a certain date, default to \`${new Date().getFullYear() - 1}-12-31\``,
+    CMD_DES_OPTION_LUNAR: 'Use the lunar calendar as the interval for the year-end report',
     CMD_DES_OPTION_OUTPUT:
         'print output directory, relative to the current working directory, default `User/Downloads`',
     CMD_DES_OPTION_OVERWRITE:

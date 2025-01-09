@@ -17,7 +17,8 @@ module.exports = {
 
     CMD_DES_OPTION_AUTHOR: '`auto`の場合、git global configから検索、デフォルトはすべてのログを出力',
     CMD_DES_OPTION_SINCE: `特定の日から出力開始、デフォルトは \`${new Date().getFullYear() - 1}-01-01\``,
-    CMD_DES_OPTION_BEFORE: `特定の日まで出力終了、デフォルトは \`${new Date().getFullYear()}-01-01\``,
+    CMD_DES_OPTION_BEFORE: `特定の日まで出力終了、デフォルトは \`${new Date().getFullYear() - 1}-12-31\``,
+    CMD_DES_OPTION_LUNAR: '年末報告の期間として旧暦を使用する',
     CMD_DES_OPTION_OUTPUT:
         'print 出力ディレクトリ、現在の作業ディレクトリに対して相対的、デフォルトは `User/Downloads`',
     CMD_DES_OPTION_OVERWRITE: 'add 上書き許可、現在の作業ディレクトリが既に存在する場合に上書き操作を実行',

@@ -17,7 +17,8 @@ module.exports = {
 
     CMD_DES_OPTION_AUTHOR: '为 `auto` 时从 git global config 中查找，默认全部输出日志',
     CMD_DES_OPTION_SINCE: `从某日开始输出，默认为 \`${new Date().getFullYear() - 1}-01-01\``,
-    CMD_DES_OPTION_BEFORE: `输出到某日结束，默认为 \`${new Date().getFullYear()}-01-01\``,
+    CMD_DES_OPTION_BEFORE: `输出到某日结束，默认为 \`${new Date().getFullYear() - 1}-12-31\``,
+    CMD_DES_OPTION_LUNAR: '使用农历作为年终总结的区间',
     CMD_DES_OPTION_OUTPUT: 'print 输出目录，相对于当前工作目录，默认 `User/Downloads`',
     CMD_DES_OPTION_OVERWRITE: 'add 覆写授权，当前工作目录已存在时进行覆写操作',
     CMD_DES_OPTION_PRETTY: 'print 美化标题，使用 emoji 美化 Markdown 标题',
