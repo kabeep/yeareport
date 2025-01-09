@@ -24,6 +24,7 @@ program
     .option('author', { type: 'string', desc: locale.CMD_DES_OPTION_AUTHOR })
     .option('since', { type: 'string', desc: locale.CMD_DES_OPTION_SINCE })
     .option('before', { type: 'string', desc: locale.CMD_DES_OPTION_BEFORE })
+    .option('lunar', { type: 'boolean', desc: locale.CMD_DES_OPTION_LUNAR })
     .option('output', { type: 'string', desc: locale.CMD_DES_OPTION_OUTPUT })
     .option('overwrite', {
         alias: 'o',
@@ -43,7 +44,7 @@ program
     .strictCommands()
     .example('$0 add -o', locale.CMD_DES_EXAMPLE_OVERWRITE)
     .example('$0 add --author=kabeep', locale.CMD_DES_EXAMPLE_AUTHOR)
-    .example('$0 add --since=2023-01-01 --before=2024-01-01', locale.CMD_DES_EXAMPLE_SINCE_BEFORE)
+    .example('$0 add --since=2023-01-01 --before=2023-12-31', locale.CMD_DES_EXAMPLE_SINCE_BEFORE)
     .example('$0 print -p', locale.CMD_DES_EXAMPLE_PRETTY)
     .help()
     .alias('h', 'help')
@@ -106,7 +107,9 @@ function done(type, status = true) {
 
     const label = getActionLabel(type);
     console.log(
-        `${logSymbols[status ? 'success' : 'error']} ${label} ${status ? locale.CMD_STATUS_SUCCESS : locale.CMD_STATUS_ERROR}`,
+        `${logSymbols[status ? 'success' : 'error']} ${label} ${
+            status ? locale.CMD_STATUS_SUCCESS : locale.CMD_STATUS_ERROR
+        }`,
     );
 }
 
