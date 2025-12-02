@@ -30,7 +30,7 @@ function getRepoLog(argv: Argv) {
 }
 
 function getFirstDayOfThisYear(isLunar = false) {
-    const year = new Date().getFullYear() - 1;
+    const year = new Date().getFullYear();
     if (isLunar) {
         const date = toSolar({
             year,
@@ -47,7 +47,7 @@ function getFirstDayOfThisYear(isLunar = false) {
 }
 
 function getLastDayOfThisYear(isLunar = false) {
-    const year = new Date().getFullYear() - 1;
+    const year = new Date().getFullYear();
     if (isLunar) {
         const date = toSolar({
             year: year + 1,
