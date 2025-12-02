@@ -18,18 +18,17 @@
     "homepage": "https://github.com/kabeep/yeareport#readme",
     "repository": "git@github.com:kabeep/yeareport.git",
     "license": "MIT",
-    "main": "./lib/index.js",
-    "module": "./lib/esm/index.mjs",
-    "types": "./lib/index.d.ts",
+    "main": "./dist/cli.js",
+    "types": "./dist/cli.d.ts",
     "files": [
-        "lib"
+        "dist"
     ],
     "bin": {
-        "yeareport": "./bin/cli.js"
+        "yeareport": "dist/cli.js"
     },
     "scripts": {
         "prepare": "husky install",
-        "dev": "npm run build:dev && node bin/cli.js",
+        "dev": "npm run build:dev && node bin/cli.ts",
         "build:dev": "tsup",
         "build": "tsup --dts",
         "test": "xo src/**/*.ts bin/**/*.js --fix"

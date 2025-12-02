@@ -1,8 +1,8 @@
-const enUS = require('./en-US.js');
-const zhCN = require('./zh-CN.js');
-const jaJP = require('./ja-JP.js');
-const hiIN = require('./hi-IN');
-const baseGetLocale = require('./get-locale.js');
+import enUS from './en-US';
+import zhCN from './zh-CN';
+import jaJP from './ja-JP';
+import hiIN from './hi-IN';
+import baseGetLocale from './get-locale';
 
 function getLocale() {
     switch (baseGetLocale()) {
@@ -24,4 +24,4 @@ function getLocale() {
     }
 }
 
-module.exports = getLocale();
+export default getLocale();

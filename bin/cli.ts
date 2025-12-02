@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-const process = require('node:process');
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-const Spinner = require('cli-spinner').Spinner;
-const yeareport = require('../lib/index.js');
-const locale = require('./locale/locale.js');
-const logSymbols = require('./util/log-symbols.js');
+import process from 'node:process';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+import { Spinner } from 'cli-spinner';
+import yeareport from '../src';
+import type { Argv } from '../src/type';
+import locale from './locale/locale';
+import logSymbols from './util/log-symbols';
+import type { Operator } from '../src/constant';
 
 const program = yargs(hideBin(process.argv));
 
@@ -52,24 +54,24 @@ program
     .alias('v', 'version')
     .parse();
 
-function run(type) {
-    return async (argv) => {
+function run(type: string) {
+    return (async (argv: Argv) => {
         start(type);
-        await yeareport({ type, ...argv })
+        await yeareport({ type: type as Operator, ...argv })
             .then(resolver(type))
             .catch(catcher(type));
-    };
+    }) as (argv: any) => Promise<void>;
 }
 
-function resolver(type) {
-    return async (args) => {
+function resolver(type: string) {
+    return async (args: string[] | undefined) => {
         switch (type) {
             case 'show': {
                 done(type, args);
                 console.log();
 
                 for (let index = 0; index < (args?.length || 0); index++) {
-                    console.log(`> ${args[index]}`);
+                    console.log(`> ${args?.[index]}`);
                 }
 
                 break;
@@ -83,8 +85,8 @@ function resolver(type) {
     };
 }
 
-function catcher(type) {
-    return (error) => {
+function catcher(type: string) {
+    return (error: Error) => {
         done(type, false);
         console.log();
         console.log(`${error}`);
@@ -92,14 +94,14 @@ function catcher(type) {
     };
 }
 
-function start(type) {
+function start(type: string) {
     spinner.setSpinnerTitle(`${locale.CMD_STATUS_PENDING} ${getActionLabel(type)}...`);
     spinner.start();
 
     cursor(true);
 }
 
-function done(type, status = true) {
+function done(type: string, status: string[] | undefined | boolean = true) {
     spinner.clearLine(process.stderr);
     spinner.stop();
 
@@ -119,7 +121,7 @@ function cursor(visible = false) {
     process.stderr.write(visible ? '\u001B[?25h' : '\u001B[?25l');
 }
 
-function getActionLabel(type) {
+function getActionLabel(type: string) {
     switch (type) {
         case 'add': {
             return locale.CMD_TITLE_COMMAND_ADD;

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     CMD_TITLE_COMMAND_ADD: '追加',
     CMD_TITLE_COMMAND_REMOVE: '削除',
     CMD_TITLE_COMMAND_CLEAR: 'クリア',

@@ -1,8 +1,8 @@
-function baseGetLocale() {
+function baseGetLocale(): string {
     let locale;
 
-    if (global.chrome && global.chrome.runtime && typeof global.chrome.runtime.getManifest === 'function') {
-        locale = global.chrome.runtime.getManifest();
+    if ((global as Global as any).chrome && (global as Global as any).chrome.runtime && typeof (global as Global as any).chrome.runtime.getManifest === 'function') {
+        locale = (global as Global as any).chrome.runtime.getManifest();
         if (locale && locale.current_locale) {
             return locale.current_locale;
         }
@@ -12,7 +12,7 @@ function baseGetLocale() {
         global.navigator &&
         ((global.navigator.languages && global.navigator.languages[0]) ||
             global.navigator.language ||
-            global.navigator.userLanguage);
+            (global.navigator as Navigator as any).userLanguage);
 
     if (!locale && global.navigator && global.navigator.userAgent) {
         locale = global.navigator.userAgent.match(/;.(\w+-\w+)/i);
@@ -37,6 +37,6 @@ function baseGetLocale() {
     return locale;
 }
 
-module.exports = function () {
-    return baseGetLocale().split('-').shift();
+export default function (): string {
+    return baseGetLocale().split('-').shift() as string;
 };

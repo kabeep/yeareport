@@ -20,4 +20,4 @@ function isUnicodeSupported() {
     );
 }
 
-module.exports = isUnicodeSupported();
+export default isUnicodeSupported();
