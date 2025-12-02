@@ -10,22 +10,23 @@ function getRepoLog(argv: Argv) {
         const {
             since = getFirstDayOfThisYear(argv.lunar),
             before = getLastDayOfThisYear(argv.lunar),
-            author: originalAuthor,
+            author: originalAuthor
         } = argv;
 
-        const author =
-            originalAuthor === 'auto'
-                ? getUsernameOfGitConfig()
-                : `${(originalAuthor && `--author=${originalAuthor}`) || ''}`;
+        const author = originalAuthor === 'auto'
+            ? getUsernameOfGitConfig()
+            : originalAuthor;
 
-        const gitCommand = `git log --pretty="format:%ad %s" --date="format:%F" ${author} --since=${since} --before=${before}`;
+        const gitCommand = `git log --pretty="format:%ad %s" --date="format:%F" --author=${author} --since=${since} --before=${before}`;
         return execSync(`${gitCommand}`, {
             encoding: 'utf-8',
             cwd: workingDir,
-            stdio: 'pipe',
+            stdio: 'pipe'
         });
-    } catch {
-        throw new Fail('Can not get history of log from repository');
+    } catch (error: unknown) {
+        throw new Fail(`Can not get history of log from repository, cause ${(
+            error as Error
+        ).message}`);
     }
 }
 
@@ -36,9 +37,10 @@ function getFirstDayOfThisYear(isLunar = false) {
             year,
             month: 1,
             day: 1,
-            isLeapMonth: getLeapMonth(year) === 1,
+            isLeapMonth: getLeapMonth(year) === 1
         });
-        if (date === -1) throw new Fail('Can not get the first day of the lunar year');
+        if (date === -1) throw new Fail(
+            'Can not get the first day of the lunar year');
 
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     }
@@ -53,12 +55,14 @@ function getLastDayOfThisYear(isLunar = false) {
             year: year + 1,
             month: 1,
             day: 1,
-            isLeapMonth: getLeapMonth(year) === 1,
+            isLeapMonth: getLeapMonth(year) === 1
         });
-        if (date === -1) throw new Fail('Can not get the first day of the lunar year');
+        if (date === -1) throw new Fail(
+            'Can not get the first day of the lunar year');
         const lastDay = new Date(+date - 24 * 60 * 60 * 1000);
 
-        return `${lastDay.getFullYear()}-${lastDay.getMonth() + 1}-${lastDay.getDate()}`;
+        return `${lastDay.getFullYear()}-${lastDay.getMonth()
+        + 1}-${lastDay.getDate()}`;
     }
 
     return `${year}-12-31`;
