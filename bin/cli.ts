@@ -15,6 +15,7 @@ const spinner = new Spinner('%s ');
 spinner.setSpinnerString('⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏');
 spinner.setSpinnerDelay(80);
 
+// TODO: move internal options into command
 program
     .scriptName('yeareport')
     .usage('$0 <command> [options]')
@@ -28,6 +29,7 @@ program
     .option('before', { type: 'string', desc: locale.CMD_DES_OPTION_BEFORE })
     .option('lunar', { type: 'boolean', desc: locale.CMD_DES_OPTION_LUNAR })
     .option('output', { type: 'string', desc: locale.CMD_DES_OPTION_OUTPUT })
+    .option('append-type', { type: 'array', desc: '' })
     .option('overwrite', {
         alias: 'o',
         type: 'boolean',

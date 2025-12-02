@@ -19,6 +19,8 @@ enum PrettyEmoji {
     CI = '⌛',
     BUILD = '🔨',
     DOCS = '📄',
+    // Unknown
+    UNKNOWN = '🏷',
 }
 
 export default PrettyEmoji;

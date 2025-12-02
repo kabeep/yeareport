@@ -9,7 +9,7 @@ export type LogLineRecord = {
     text: string;
 };
 
-function getLogLineRecord(content: string): LogLineRecord | undefined {
+function getLogLineRecord(content: string, appendType: string[]): LogLineRecord | undefined {
     if (!content) {
         return;
     }
@@ -22,7 +22,8 @@ function getLogLineRecord(content: string): LogLineRecord | undefined {
         return;
     }
 
-    const regular = new RegExp(`^(${logType.join('|')}):?(.*)`, 'i');
+    // TODO: match scope and make regex to safety
+    const regular = new RegExp(`^(${[...appendType, ...logType].join('|')}):?(.*)`, 'i');
     const descMatch = title.trim().match(regular);
     const type = descMatch?.[1]?.toLowerCase() as LogType | undefined;
     const desc = descMatch?.[2]?.trim();

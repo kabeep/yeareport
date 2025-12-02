@@ -6,4 +6,5 @@ export type Argv = {
     output?: string;
     overwrite?: boolean;
     pretty?: boolean;
+    appendType?: string[];
 };
