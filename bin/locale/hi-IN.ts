@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     CMD_TITLE_COMMAND_ADD: 'जोड़ें',
     CMD_TITLE_COMMAND_REMOVE: 'हटाएँ',
     CMD_TITLE_COMMAND_CLEAR: 'साफ करें',

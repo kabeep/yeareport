@@ -1,9 +1,9 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-    entry: ['src/index.ts'],
+    entry: ['bin/cli.ts'],
     format: ['cjs', 'esm'],
-    outDir: 'lib',
+    outDir: 'dist',
     target: 'es5',
     treeshake: 'smallest',
     bundle: true,
