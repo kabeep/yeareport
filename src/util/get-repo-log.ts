@@ -17,7 +17,9 @@ function getRepoLog(argv: Argv) {
             ? getUsernameOfGitConfig()
             : originalAuthor;
 
-        const gitCommand = `git log --pretty="format:%ad %s" --date="format:%F" --author=${author} --since=${since} --before=${before}`;
+        const authorArg = author ? `--author=${author}` : '';
+
+        const gitCommand = `git log --pretty="format:%ad %s" --date="format:%F" ${authorArg} --since=${since} --before=${before}`;
         return execSync(`${gitCommand}`, {
             encoding: 'utf-8',
             cwd: workingDir,
