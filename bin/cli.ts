@@ -3,7 +3,7 @@ import process from 'node:process';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { Spinner } from 'cli-spinner';
-import yeareport from '../src';
+import annualize from '../src';
 import type { Argv } from '../src/type';
 import locale from './locale/locale';
 import logSymbols from './util/log-symbols';
@@ -17,7 +17,7 @@ spinner.setSpinnerDelay(80);
 
 // TODO: move internal options into command
 program
-    .scriptName('yeareport')
+    .scriptName('annualize')
     .usage('$0 <command> [options]')
     .command('add', locale.CMD_DES_COMMAND_ADD, {}, run('add'))
     .command(['remove', 'rm'], locale.CMD_DES_COMMAND_REMOVE, {}, run('remove'))
@@ -29,7 +29,7 @@ program
     .option('before', { type: 'string', desc: locale.CMD_DES_OPTION_BEFORE })
     .option('lunar', { type: 'boolean', desc: locale.CMD_DES_OPTION_LUNAR })
     .option('output', { type: 'string', desc: locale.CMD_DES_OPTION_OUTPUT })
-    .option('append-type', { type: 'array', desc: '' })
+    .option('append-type', { type: 'array', desc: locale.CMD_DES_OPTION_APPEND_TYPE })
     .option('overwrite', {
         alias: 'o',
         type: 'boolean',
@@ -59,7 +59,7 @@ program
 function run(type: string) {
     return (async (argv: Argv) => {
         start(type);
-        await yeareport({ type: type as Operator, ...argv })
+        await annualize({ type: type as Operator, ...argv })
             .then(resolver(type))
             .catch(catcher(type));
     }) as (argv: any) => Promise<void>;

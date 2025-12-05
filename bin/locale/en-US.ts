@@ -20,10 +20,11 @@ export default {
     CMD_DES_OPTION_BEFORE: `End outputting on a certain date, default to \`${new Date().getFullYear() - 1}-12-31\``,
     CMD_DES_OPTION_LUNAR: 'Use the lunar calendar as the interval for the year-end report',
     CMD_DES_OPTION_OUTPUT:
-        'print output directory, relative to the current working directory, default `User/Downloads`',
+        'Output directory, relative to the current working directory, default `User/Downloads`',
+    CMD_DES_OPTION_APPEND_TYPE: 'Custom commit type',
     CMD_DES_OPTION_OVERWRITE:
-        'add overwrite authorization, perform overwrite operation when the current working directory already exists',
-    CMD_DES_OPTION_PRETTY: 'print beautify the title, use emoji to beautify Markdown titles',
+        'Overwrite authorization, perform overwrite operation when the current working directory already exists',
+    CMD_DES_OPTION_PRETTY: 'beautify the title, use emoji to beautify Markdown titles',
 
     CMD_DES_EXAMPLE_OVERWRITE:
         'Authorize the add command to overwrite when logs of the current working directory are already in the queue',
