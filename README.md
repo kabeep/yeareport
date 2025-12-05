@@ -1,149 +1,140 @@
-<h1 align="center"> yeareport </h1>
+<h1 align="center">Annualized</h1>
 <p align="center">
-  <b>A NodeJS tool for summarizing git commits for annual reports, automatically generating Markdown</b>
+  <b>基于 git commit 为年终述职诞生的 Node.js CLI， 生成 Markdown</b>
 </p>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/NodeJS-≥16.x-lightseagreen?logo=powershell" alt="nodejs" />
+    <img src="https://img.shields.io/badge/Version-0.4.3-cornflowerblue" alt="Version" />
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/License-MIT-slateblue" alt="License" />
+    </a>
+</p>
+
+<p align="center"><a href="README.en-US.md">English</a> | 简体中文</p>
+
+## 📖 简介
+
+`Annualized` 不止可以总结项目的提交树，它更专注于个人贡献。
 
 ---
 
-<div align="center">
+在我入职某公司的第一个年终，我反复思考我**做、发现、解决了**什么，以及**下一步**如何做，如何帮助公司和部门变得更好，帮助项目更进一步。
+我想了很久，一个尚未发布经受市场考验的项目，增长、反馈、创新都与我无缘，我能写什么？
+*我只能想到自己攻克了多少难点、解决了什么跨部门的问题、提高了同事多少效率、创造了多少价值*、...。
+我翻开几个项目的提交树，它们具体到没有意义，但我还是从整体细节中总结出这一年的路线图，于是 `Annualize` 诞生了。
 
-![nodejs](https://img.shields.io/badge/NodeJS-≥16.x-lightseagreen?logo=powershell)
-![Version](https://img.shields.io/badge/Version-1.0.0-cornflowerblue)
-[![License](https://img.shields.io/badge/License-MIT-slateblue)](LICENSE)
+> 它解决哪些痛点：
+> - 可选农历区间作为一年的开始与结束
+> - 可控时间范围
+> - 提取某人的提交日志
+> - 生成 AI 可用的 Markdown
+> - 根据类型分类清单和统计数量
 
-English | [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md) | [हिंदी](README.hi-IN.md)
+声明：作者对控制型管理模式没有好感，尤其是互联网企业，希望我们不总是身不由己。
 
-</div>
-
-## 📖 Introduction
-
-`year-report` is a tool dedicated to serving individuals, assisting in writing annual reports.
-
-> It can help you:
->
-> - Summarize personal git work logs
->
-> - Output pretty Markdown
->
-> - Extract a list and count of specified work types
->
-> How it differs from changelog-cli:
->
-> - Focused on you
->
-> - Flexible and controllable time range
->
-> - Supported lunar calendar interval
->
-> - More controllable output result modes
->
-> - Better standard material designed for developers writing annual reports
->
-> - Pre-parse data fed to GPT
-
-[Markdown](example/example.md) output result demonstration
+查看 [Markdown 示例](example/example.md)，或者图片预览：
 
 ![default_example](example/screenshot.png)
 
-## ⚙️ Installation
+## ⚙️ 安装
 
-1. Clone the repository
+1. 克隆仓库
 
 ```shell
-git clone https://github.com/kabeep/yeareport.git
+git clone https://github.com/kabeep/annualize.git
 ```
 
-2. Installation dependency
+2. 安装依赖
 
 ```shell
-cd yeareport
+cd annualize
 
-# NPM
+# 使用 npm 安装
 npm install
 
-# or Yarn
+# 或者使用 yarn 安装
+yarn
+
+# 亦或使用 pnpm 安装
+pnpm install
 yarn
 ```
 
-3. Compile program
+3. 编译程序
 
 ```shell
 npm run build
 ```
 
-4. NPM soft link
+4. 通过软链接到全局
 
 ```shell
 npm link
 ```
 
-5. Test
+5. 测试安装成功
 
 ```shell
-yeareport -h
+annualize -v
 ```
 
-## 🚀 Usage
+## 🚀 使用
+
+下面是一个常见工作流：
 
 ![Usage](example/usage.png)
 
 ```text
-yeareport <command> [options]
+annualize <command> [options]
 
-Command:
-  yeareport add     Add the current directory to the queue
-  yeareport remove  Remove the current working directory from the queue
-                                                                   [aliases: rm]
-  yeareport clear   Clear the queue                               [aliases: clr]
-  yeareport print   Output the queue as a markdown file           [aliases: ptr]
-  yeareport show    Show the list of logs in the queue
+命令：
+  annualize add     将当前目录添加至队列
+  annualize remove  将当前工作目录从队列中移除                        [aliases: rm]
+  annualize clear   清空队列                                      [aliases: clr]
+  annualize print   将队列输出为 markdown 文件                     [aliases: ptr]
+  annualize show    显示队列中的日志列表
 
-Options:
-      --author     When `auto`, look up from git global config, default to
-                   output all logs                                      [string]
-      --since      Start outputting from a certain date, default to `2023-01-01`
-                                                                        [string]
-      --before     End outputting on a certain date, default to `2024-01-01`
-                                                                        [string]
-      --lunar      Use the lunar calendar as the interval for the year-end report
-                                                                       [boolean]
-      --output     print output directory, relative to the current working
-                   directory, default `User/Downloads`                  [string]
-  -o, --overwrite  add overwrite authorization, perform overwrite operation when
-                   the current working directory already exists
-                                                          [bool] [default: false]
-  -p, --pretty     print beautify the title, use emoji to beautify Markdown
-                   titles                                 [bool] [default: false]
-  -h, --help       Display help information                                [bool]
-  -v, --version    Show version number                                     [bool]
+选项：
+      --author       为 `auto` 时从 git global config 中查找，默认全部输出日志
+                                                                       [字符串]
+      --since        从某日开始输出，默认为 `2023-01-01`                    [字符串]
+      --before       输出到某日结束，默认为 `2024-01-01`                    [字符串]
+      --lunar        使用农历作为年终总结的区间                               [布尔]
+      --output       print 输出目录，相对于当前工作目录，默认 `User/Downloads`
+                                                                       [字符串]
+      --append-type  自定义提交类型                                         [数组]
+  -o, --overwrite    add 覆写授权，当前工作目录已存在时进行覆写操作
+                                                          [布尔] [默认值: false]
+  -p, --pretty       print 美化标题，使用 emoji 美化 Markdown 标题
+                                                          [布尔] [默认值: false]
+  -h, --help         显示帮助信息                                          [布尔]
+  -v, --version      显示版本号                                           [布尔]
 
-Example:
-  yeareport add -o                          Authorize the add command to
-                                            overwrite when logs of the current
-                                            working directory are already in the
-                                            queue
-  yeareport add --author=kabeep             Only add logs of author kabeep to
-                                            the queue
-  yeareport add --since=2023-01-01          Add logs from 2023-01-01 to
-  --before=2024-01-01                       2024-01-01 to the queue
-  yeareport print -p                        Markdown titles will output `#
-                                            {emoji} {commit-type}`
+示例：
+  annualize add -o                          授权 add 命令当前工作目录的日志已在
+                                            队列中时进行覆写
+  annualize add --author=kabeep             仅将作者 kabeep 的日志添加到队列
+  annualize add --since=2023-01-01          将 2023-01-01 到 2024-01-01
+  --before=2024-01-01                       的日志添加到队列
+  annualize print -p                        Markdown 标题将输出 `# {emoji}
+                                            {commit-type}`
 ```
 
 ## 🎯 RoadMap
 
-- Statistical analysis and word segmentation
+- 统计与分词
 
-- Percentage calculation
+- 百分比计算
 
-- Trend chart
+- 趋势图
 
-- Gantt chart
+- 甘特图
 
-## 🤝 Contribution
+## 🤝 贡献
 
-Contributions via Pull Requests or [Issues](https://github.com/kabeep/yeareport/issues) are welcome.
+欢迎通过 Pull Requests 或 [Issues](https://github.com/kabeep/annualize/issues) 来贡献你的想法和代码。
 
-## 📄 License
+## 📄 许可
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+本项目采用 MIT 许可证。详情请见 [LICENSE](LICENSE) 文件。
