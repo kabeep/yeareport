@@ -8,7 +8,7 @@ type Action = {
     type: Operator;
 } & Argv;
 
-async function yeareport(action: Action) {
+async function annualize(action: Action) {
     const { type, ...rest } = action;
 
     const hasCacheDir = fs.existsSync(cacheDir);
@@ -45,4 +45,4 @@ async function yeareport(action: Action) {
     }
 }
 
-export default yeareport;
+export default annualize;

@@ -1,7 +1,7 @@
 {
-    "name": "yeareport",
+    "name": "annualize",
     "version": "0.4.3",
-    "description": "A library of NodeJS tool to summarize git commit log for year-end report.",
+    "description": "Node.js CLI based on git commit for annual contribute index, generates Markdown",
     "keywords": [
         "year-end report",
         "llm material",
@@ -15,8 +15,8 @@
         "nodejs"
     ],
     "author": "Zhang Zixin (kabeep)",
-    "homepage": "https://github.com/kabeep/yeareport#readme",
-    "repository": "git@github.com:kabeep/yeareport.git",
+    "homepage": "https://github.com/kabeep/annualize#readme",
+    "repository": "git@github.com:kabeep/annualize.git",
     "license": "MIT",
     "main": "./dist/cli.js",
     "types": "./dist/cli.d.ts",
@@ -24,7 +24,7 @@
         "dist"
     ],
     "bin": {
-        "yeareport": "dist/cli.js"
+        "annualize": "dist/cli.js"
     },
     "scripts": {
         "prepare": "husky install",

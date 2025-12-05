@@ -29,7 +29,7 @@ async function printer(argv: Argv) {
         pretty
     ).value();
 
-    const filename = `yeareport_${Date.now()}.md`;
+    const filename = `annualize_${Date.now()}.md`;
 
     if (output) {
         const outputPath = path.resolve(workingDir, output);
