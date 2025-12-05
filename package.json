@@ -1,6 +1,6 @@
 {
     "name": "annualize",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "description": "Node.js CLI based on git commit for annual contribute index, generates Markdown",
     "keywords": [
         "year-end report",
