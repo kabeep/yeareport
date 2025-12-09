@@ -1,17 +1,11 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import intersection from 'lodash.intersection';
 import startCase from 'lodash.startcase';
+import fs from 'node:fs';
+import path from 'node:path';
 import { cacheDir, downloadDir, PrettyEmoji, workingDir } from '../constant';
 import type { Argv } from '../type';
 import type { LogLineRecord } from '../util';
-import {
-    Fail,
-    getCacheFiles,
-    getLogLineRecord,
-    Markdown,
-    readByLine
-} from '../util';
+import { Fail, getCacheFiles, getLogLineRecord, Markdown, readByLine } from '../util';
 
 type InvertedIndex = Record<'type' | 'month' | 'date', Record<string, number[]>>;
 
@@ -26,7 +20,7 @@ async function printer(argv: Argv) {
         new Markdown(),
         collection,
         invertedIndex,
-        pretty
+        pretty,
     ).value();
 
     const filename = `annualize_${Date.now()}.md`;
@@ -48,22 +42,22 @@ function defaultMarkdown(
     md: Markdown,
     collection: LogLineRecord[],
     invertedIndex: Record<string, InvertedIndex & { count: number }>,
-    pretty = false
+    pretty = false,
 ) {
     for (const [project, projectInvertedIndexes] of
         Object.entries<InvertedIndex & { count: number }>(invertedIndex)) {
         md = md.title(
             1,
             `${project} (${projectInvertedIndexes.count})`,
-            pretty && PrettyEmoji.PROJECT
+            pretty && PrettyEmoji.PROJECT,
         );
         for (const [month, monthIndexes] of sortedInvertedIndexDates(
-            Object.entries<number[]>(projectInvertedIndexes.month)
+            Object.entries<number[]>(projectInvertedIndexes.month),
         )) {
             md = md.title(
                 2,
                 `${month} (${monthIndexes.length})`,
-                pretty && PrettyEmoji.MONTH
+                pretty && PrettyEmoji.MONTH,
             );
             for (const [type, typeIndexes] of
                 Object.entries<number[]>(projectInvertedIndexes.type)) {
@@ -96,6 +90,14 @@ function sortedInvertedIndexDates(dates: Array<[string, number[]]>) {
 }
 
 function createReader(appendType: string[]) {
+    const createInvertedIndex = (keys: Array<keyof InvertedIndex>) =>
+        Object.fromEntries<Record<string, number[]>>(
+            keys.map<[keyof InvertedIndex, Record<string, number[]>]>((item) => [
+                item,
+                {},
+            ]),
+        ) as InvertedIndex;
+
     return async (cacheFiles: string[]) => {
         const collection: LogLineRecord[] = [];
 
@@ -103,20 +105,12 @@ function createReader(appendType: string[]) {
             count: number
         }> = {};
 
-        const createInvertedIndex = (keys: Array<keyof InvertedIndex>) =>
-            Object.fromEntries<Record<string, number[]>>(
-                keys.map<[keyof InvertedIndex, Record<string, number[]>]>((item) => [
-                    item,
-                    {}
-                ])
-            ) as InvertedIndex;
-
         for (const filename of cacheFiles) {
             const list = await readByLine(path.resolve(cacheDir, filename));
             const projectInvertedIndex = createInvertedIndex([
                 'type',
                 'month',
-                'date'
+                'date',
             ]);
 
             let count = 0;
@@ -140,13 +134,13 @@ function createReader(appendType: string[]) {
         }
 
         return { collection, invertedIndex };
-    }
+    };
 }
 
 function pushToPropertyAsArray(
     object: Record<string, any>,
     property: string,
-    value: any
+    value: any,
 ) {
     (
         object[property] ?? (
