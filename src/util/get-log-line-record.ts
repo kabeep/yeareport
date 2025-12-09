@@ -25,12 +25,8 @@ function getLogLineRecord(content: string, appendType: string[]): LogLineRecord 
     // TODO: match scope and make regex to safety
     const regular = new RegExp(`^(${[...appendType, ...logType].join('|')}):?(.*)`, 'i');
     const descMatch = title.trim().match(regular);
-    const type = descMatch?.[1]?.toLowerCase() as LogType | undefined;
-    const desc = descMatch?.[2]?.trim();
-
-    if (!type || !desc) {
-        return;
-    }
+    const type = (descMatch?.[1]?.toLowerCase() ?? 'misc') as LogType;
+    const desc = descMatch?.[2]?.trim() ?? title;
 
     return { date, month, type, desc, text };
 }
