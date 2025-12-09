@@ -7,7 +7,7 @@ import type { Argv } from '../type';
 import type { LogLineRecord } from '../util';
 import { Fail, getCacheFiles, getLogLineRecord, Markdown, readByLine } from '../util';
 
-type InvertedIndex = Record<'type' | 'month' | 'date', Record<string, number[]>>;
+type InvertedIndex = Record<'type' | 'scope' | 'month' | 'date', Record<string, number[]>>;
 
 async function printer(argv: Argv) {
     const { pretty, output, appendType = [], reverse = true } = argv;
@@ -62,25 +62,26 @@ function defaultMarkdown(
                 `${month} (${monthIndexes.length})`,
                 pretty && PrettyEmoji.MONTH,
             );
-            for (const [type, typeIndexes] of
-                Object.entries<number[]>(projectInvertedIndexes.type)) {
-                const indexes = intersection(monthIndexes, typeIndexes);
+            for (const [type, typeIndexes] of Object.entries<number[]>(projectInvertedIndexes.type)) {
+                const currentIndexes = intersection(monthIndexes, typeIndexes);
+                if (!currentIndexes.length) continue;
 
-                if (indexes.length === 0) {
-                    continue;
+                for (const [scope, scopeIndexes] of Object.entries<number[]>(projectInvertedIndexes.scope)) {
+                    const indexes = intersection(currentIndexes, scopeIndexes);
+                    if (!indexes.length) continue;
+
+                    md = md
+                        .title(
+                            3,
+                            `${startCase(type)}${scope ? `(${scope})` : ''} (${indexes.length})`,
+                            pretty
+                            && (
+                                PrettyEmoji[type.toUpperCase() as keyof typeof PrettyEmoji]
+                                || PrettyEmoji.UNKNOWN
+                            ),
+                        )
+                        .list(indexes.map((index) => collection[index].text));
                 }
-
-                md = md
-                    .title(
-                        3,
-                        `${startCase(type)} (${indexes.length})`,
-                        pretty
-                        && (
-                            PrettyEmoji[type.toUpperCase() as keyof typeof PrettyEmoji]
-                            || PrettyEmoji.UNKNOWN
-                        ),
-                    )
-                    .list(indexes.map((index) => collection[index].text));
             }
         }
     }
@@ -111,7 +112,7 @@ function createReader({ appendType, reverse }: Required<Pick<Argv, 'appendType' 
                 object[property] = []
             )
         ).push(value);
-    }
+    };
 
     return async (cacheFiles: string[]) => {
         const collection: LogLineRecord[] = [];
@@ -124,6 +125,7 @@ function createReader({ appendType, reverse }: Required<Pick<Argv, 'appendType' 
             const list = await readByLine(path.resolve(cacheDir, filename));
             const projectInvertedIndex = createInvertedIndex([
                 'type',
+                'scope',
                 'month',
                 'date',
             ]);
@@ -131,15 +133,14 @@ function createReader({ appendType, reverse }: Required<Pick<Argv, 'appendType' 
             let count = 0;
             for (const element of reverse ? list.toReversed() : list) {
                 const record = getLogLineRecord(element, appendType);
-                if (!record) {
-                    continue;
-                }
+                if (!record) continue;
 
                 const refer = collection.length;
                 collection.push(record);
 
-                const { date, month, type } = record;
+                const { date, month, type, scope } = record;
                 pushToPropertyAsArray(projectInvertedIndex.type, type, refer);
+                pushToPropertyAsArray(projectInvertedIndex.scope, scope, refer);
                 pushToPropertyAsArray(projectInvertedIndex.date, date, refer);
                 pushToPropertyAsArray(projectInvertedIndex.month, month, refer);
                 count++;

@@ -5,6 +5,7 @@ export type LogLineRecord = {
     date: string;
     month: string;
     type: LogType;
+    scope: string;
     desc: string;
     text: string;
 };
@@ -23,12 +24,15 @@ function getLogLineRecord(content: string, appendType: string[]): LogLineRecord 
     }
 
     // TODO: match scope and make regex to safety
-    const regular = new RegExp(`^(${[...appendType, ...logType].join('|')}):?(.*)`, 'i');
+    const regular = new RegExp(`^(${[...appendType, ...logType].join('|')})(?:\\(([\\s\\S]*?)\\))?(?::\\s*|\\s+)([\\s\\S]*)$`, 'i');
     const descMatch = title.trim().match(regular);
-    const type = (descMatch?.[1]?.toLowerCase() ?? 'misc') as LogType;
-    const desc = descMatch?.[2]?.trim() ?? title;
+    const type = (
+        descMatch?.[1]?.toLowerCase() ?? 'misc'
+    ) as LogType;
+    const scope = descMatch?.[2] ?? "";
+    const desc = descMatch?.[3]?.trim() ?? title;
 
-    return { date, month, type, desc, text };
+    return { date, month, type, scope, desc, text };
 }
 
 export default getLogLineRecord;
