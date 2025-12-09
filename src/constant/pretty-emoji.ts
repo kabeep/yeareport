@@ -20,7 +20,7 @@ enum PrettyEmoji {
     BUILD = '🔨',
     DOCS = '📄',
     // Unknown
-    UNKNOWN = '🏷',
+    UNKNOWN = '🔩',
 }
 
 export default PrettyEmoji;

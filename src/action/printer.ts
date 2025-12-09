@@ -78,8 +78,10 @@ function defaultMarkdown(
                         3,
                         `${startCase(type)} (${indexes.length})`,
                         pretty
-                        && PrettyEmoji[type.toUpperCase() as keyof typeof PrettyEmoji]
-                        || PrettyEmoji.UNKNOWN
+                        && (
+                            PrettyEmoji[type.toUpperCase() as keyof typeof PrettyEmoji]
+                            || PrettyEmoji.UNKNOWN
+                        ),
                     )
                     .list(indexes.map((index) => collection[index].text));
             }
