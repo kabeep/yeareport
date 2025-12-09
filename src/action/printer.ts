@@ -48,7 +48,7 @@ function defaultMarkdown(
 ) {
     for (const [project, projectInvertedIndexes] of
         Object.entries<InvertedIndex & { count: number }>(invertedIndex)) {
-        md = md.title(
+        md.title(
             1,
             `${project} (${projectInvertedIndexes.count})`,
             pretty && PrettyEmoji.PROJECT,
@@ -62,15 +62,19 @@ function defaultMarkdown(
                 `${month} (${monthIndexes.length})`,
                 pretty && PrettyEmoji.MONTH,
             );
+
+            const pieList = [];
             for (const [type, typeIndexes] of Object.entries<number[]>(projectInvertedIndexes.type)) {
                 const currentIndexes = intersection(monthIndexes, typeIndexes);
                 if (!currentIndexes.length) continue;
+
+                pieList.push({ name: type, value: currentIndexes.length });
 
                 for (const [scope, scopeIndexes] of Object.entries<number[]>(projectInvertedIndexes.scope)) {
                     const indexes = intersection(currentIndexes, scopeIndexes);
                     if (!indexes.length) continue;
 
-                    md = md
+                    md
                         .title(
                             3,
                             `${startCase(type)}${scope ? `(${scope})` : ''} (${indexes.length})`,
@@ -83,6 +87,8 @@ function defaultMarkdown(
                         .list(indexes.map((index) => collection[index].text));
                 }
             }
+
+            md.pie(month, pieList);
         }
     }
 

@@ -39,14 +39,24 @@ class Markdown {
         return this;
     }
 
+    pie(title: string, list: { name: string, value: number }[]) {
+        const content = [
+            'pie',
+            `    title ${title}`,
+            ...list.map(({ name, value }) => `    "${name}" : ${value}`)
+        ].join('\n');
+
+        this.content += this.withLine(this.createMermaidBlock(content));
+
+        return this;
+    }
+
     value() {
         return this.content;
     }
 
     private withLine(content = '', prefix = '') {
-        return `${content}
-${prefix}
-`;
+        return `${content}\n${prefix}\n`;
     }
 
     private withPrefix(content = '', prefix: string | boolean | undefined = '') {
@@ -55,6 +65,10 @@ ${prefix}
 
     private createTitleSign(level: TitleLevel) {
         return new Array(level).fill('#').join('');
+    }
+
+    private createMermaidBlock(content: string, theme = "neutral") {
+        return `\`\`\`mermaid\n---\nconfig:\n    theme: '${theme}'\n---\n${content}\n\`\`\``
     }
 }
 
