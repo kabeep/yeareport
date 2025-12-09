@@ -21,6 +21,7 @@ export default {
     CMD_DES_OPTION_LUNAR: 'Use the lunar calendar as the interval for the year-end report',
     CMD_DES_OPTION_OUTPUT:
         'Output directory, relative to the current working directory, default `User/Downloads`',
+    CMD_DES_OPTION_REVERSE: 'Output in chronological order',
     CMD_DES_OPTION_APPEND_TYPE: 'Custom commit type',
     CMD_DES_OPTION_OVERWRITE:
         'Overwrite authorization, perform overwrite operation when the current working directory already exists',

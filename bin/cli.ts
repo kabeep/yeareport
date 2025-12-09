@@ -29,6 +29,7 @@ program
     .option('before', { type: 'string', desc: locale.CMD_DES_OPTION_BEFORE })
     .option('lunar', { type: 'boolean', desc: locale.CMD_DES_OPTION_LUNAR })
     .option('output', { type: 'string', desc: locale.CMD_DES_OPTION_OUTPUT })
+    .option('reverse', { type: 'boolean', desc: locale.CMD_DES_OPTION_REVERSE })
     .option('append-type', { type: 'array', desc: locale.CMD_DES_OPTION_APPEND_TYPE })
     .option('overwrite', {
         alias: 'o',

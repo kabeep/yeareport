@@ -4,6 +4,7 @@ export type Argv = {
     before?: string;
     lunar?: boolean;
     output?: string;
+    reverse?: boolean;
     overwrite?: boolean;
     pretty?: boolean;
     appendType?: string[];

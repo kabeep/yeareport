@@ -10,17 +10,18 @@ import { Fail, getCacheFiles, getLogLineRecord, Markdown, readByLine } from '../
 type InvertedIndex = Record<'type' | 'month' | 'date', Record<string, number[]>>;
 
 async function printer(argv: Argv) {
-    const { pretty, output, appendType = [] } = argv;
+    const { pretty, output, appendType = [], reverse = true } = argv;
 
     const cacheFiles = getCacheFiles();
 
-    const { collection, invertedIndex } = await createReader(appendType)(cacheFiles);
+    const { collection, invertedIndex } = await createReader({ appendType, reverse })(cacheFiles);
 
     const file = defaultMarkdown(
         new Markdown(),
         collection,
         invertedIndex,
         pretty,
+        reverse,
     ).value();
 
     const filename = `annualize_${Date.now()}.md`;
@@ -43,6 +44,7 @@ function defaultMarkdown(
     collection: LogLineRecord[],
     invertedIndex: Record<string, InvertedIndex & { count: number }>,
     pretty = false,
+    reverse = false,
 ) {
     for (const [project, projectInvertedIndexes] of
         Object.entries<InvertedIndex & { count: number }>(invertedIndex)) {
@@ -51,9 +53,10 @@ function defaultMarkdown(
             `${project} (${projectInvertedIndexes.count})`,
             pretty && PrettyEmoji.PROJECT,
         );
-        for (const [month, monthIndexes] of sortedInvertedIndexDates(
+        const list = sortedInvertedIndexDates(
             Object.entries<number[]>(projectInvertedIndexes.month),
-        )) {
+        );
+        for (const [month, monthIndexes] of reverse ? list.toReversed() : list) {
             md = md.title(
                 2,
                 `${month} (${monthIndexes.length})`,
@@ -89,7 +92,7 @@ function sortedInvertedIndexDates(dates: Array<[string, number[]]>) {
     return dates.sort(([a], [b]) => b.localeCompare(a));
 }
 
-function createReader(appendType: string[]) {
+function createReader({ appendType, reverse }: Required<Pick<Argv, 'appendType' | 'reverse'>>) {
     const createInvertedIndex = (keys: Array<keyof InvertedIndex>) =>
         Object.fromEntries<Record<string, number[]>>(
             keys.map<[keyof InvertedIndex, Record<string, number[]>]>((item) => [
@@ -97,6 +100,18 @@ function createReader(appendType: string[]) {
                 {},
             ]),
         ) as InvertedIndex;
+
+    const pushToPropertyAsArray = (
+        object: Record<string, any>,
+        property: string,
+        value: any,
+    ) => {
+        (
+            object[property] ?? (
+                object[property] = []
+            )
+        ).push(value);
+    }
 
     return async (cacheFiles: string[]) => {
         const collection: LogLineRecord[] = [];
@@ -114,7 +129,7 @@ function createReader(appendType: string[]) {
             ]);
 
             let count = 0;
-            for (const element of list) {
+            for (const element of reverse ? list.toReversed() : list) {
                 const record = getLogLineRecord(element, appendType);
                 if (!record) {
                     continue;
@@ -135,18 +150,6 @@ function createReader(appendType: string[]) {
 
         return { collection, invertedIndex };
     };
-}
-
-function pushToPropertyAsArray(
-    object: Record<string, any>,
-    property: string,
-    value: any,
-) {
-    (
-        object[property] ?? (
-            object[property] = []
-        )
-    ).push(value);
 }
 
 export default printer;
